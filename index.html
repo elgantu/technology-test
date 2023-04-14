@@ -9,11 +9,14 @@
 <body>
 
     <div style="width: 100%;height: 100%;">
+        <div class="loader-container" id="loaderPreview">
+            <div class="loader"></div>
+        </div>
         <canvas id="previewCanvas" style="
             position: absolute;width: 100%;height: 100%;
             transform: scale(-1, 1);object-fit: contain;">
         </canvas>
-        <video id="player__preview" class="video-js vjs-wss" playsinline autoplay controls preload="auto" crossOrigin='anonymous'>
+        <video id="player__preview" class="video-js vjs-wss" playsinline controls preload="auto" crossOrigin='anonymous'>
           <p class="vjs-no-js">
             Пожалуйста, включите javascript.
           </p>
@@ -31,7 +34,8 @@
             canvasElementId: 'previewCanvas',
             // autoplay: true,
             // muted: true,
-            faceDetectorPlayPause: false
+            faceDetectorPlayPause: false,
+            loader: "loaderPreview"
         })
     </script>
 </body>

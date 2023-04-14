@@ -47,7 +47,14 @@
 
 
             async initialFaceDetector(player) {
+                let loader = false;
 
+                if(initialData.loader){
+                    loader = document.getElementById(initialData.loader)
+                    loader.style.display = "flex"
+                }
+
+                Player.muted(true);
                 function onIndex(index) {
                     if (initialData.faceDetectorPlayPause) {
                         if (index.attention) {
@@ -71,11 +78,17 @@
 
                 const canvas = document.getElementById(initialData.canvasElementId)
                 canvas.style.zIndex = 2;
-                this.pausePlay()
-                setTimeout(async ()=>{
-                                    await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
-                this.startPlay()
-                },200)
+                
+                PC.setCurrentTime(0)
+
+                await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
+                if(loader){
+                    loader.style.display = "none"
+                }
+
+
+                Player.muted(false);
+                PC.setCurrentTime(1)
             }
 
         }
