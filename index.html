@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/player.css">
+    <link rel="stylesheet" href="css/wss_player.css">
+</head>
+
+<body>
+
+    <div style="width: 100%;height: 100%;">
+        <canvas id="previewCanvas" style="
+            position: absolute;width: 100%;height: 100%;
+            transform: scale(-1, 1);object-fit: contain;">
+        </canvas>
+        <video id="player__preview" class="video-js vjs-wss" playsinline autoplay controls preload="auto" crossOrigin='anonymous'>
+          <p class="vjs-no-js">
+            Пожалуйста, включите javascript.
+          </p>
+        </video>
+    </div>
+
+    <script src="videojs/videojs.js"></script>
+    <script src="videojs/libplayer.js"></script>
+    <script src="videojs/bundle.js"></script>
+    <script>
+        WSSP({
+            video_url: 'https://elgantu.github.io/bundle/video2.mp4',
+            playerElement: 'player__preview',
+            faceDetector: true,
+            canvasElementId: 'previewCanvas',
+            // autoplay: true,
+            // muted: true,
+            faceDetectorPlayPause: false
+        })
+    </script>
+</body>
+
+</html>
