@@ -49,7 +49,7 @@
             async initialFaceDetector(player) {
                 let loader = false;
 
-                if(initialData.loader){
+                if (initialData.loader) {
                     loader = document.getElementById(initialData.loader)
                     loader.style.display = "flex"
                 }
@@ -79,13 +79,14 @@
 
                 const canvas = document.getElementById(initialData.canvasElementId)
                 canvas.style.zIndex = 2;
-                
+
                 PC.setCurrentTime(0)
-                setTimeout(()=>{
+                setTimeout(() => {
                     window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
-                },1000)
-                window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
-                if(loader){
+                }, 1000)
+
+            
+                if (loader) {
                     loader.style.display = "none"
                 }
 
