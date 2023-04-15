@@ -28,10 +28,10 @@
         <div class="loader-container" id="loaderPreview">
             <div class="loader"></div>
         </div>
-        <canvas id="previewCanvas2" style="
+        <!-- <canvas id="previewCanvas2" style="
             position: absolute;width: 100%;height: 100%;
             transform: scale(-1, 1);object-fit: contain;z-index: 200;">
-        </canvas>
+        </canvas> -->
         <video id="webcam" autoplay muted crossOrigin='anonymous'></video>
     </div>
     <div id="active"></div>
@@ -85,12 +85,12 @@
                                 // console.log(index)
                             }
 
-                            const canvas = document.getElementById("privewCanvas2")
+                            // const canvas = document.getElementById("privewCanvas2")
 
                             window.createFaceDetector(video, {
                                 onIndex: onIndex,
                                 onSecondIndex: onSecondIndex
-                            }, canvas)
+                            })
                         }, 500)
 
                         startStopButton.textContent = 'Stop';
