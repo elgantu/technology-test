@@ -120,15 +120,24 @@
 
         Player.on('play', async () => {
             let time = Player.currentTime()
-            if(time > 1){
+            // if(time > 1){
+            //     if (initialData.faceDetector && !PC.renderToCanvas) {
+            //         PC.renderToCanvas = true;
+            //         PC.initialFaceDetector(Player.children_[0])
+            //     }
+            // }
+            Player.controls(false)
+        })
+
+        Player.on('timeupdate', async () => {
+            let time = Player.currentTime()
+            if(time > 0){
                 if (initialData.faceDetector && !PC.renderToCanvas) {
                     PC.renderToCanvas = true;
                     PC.initialFaceDetector(Player.children_[0])
                 }
             }
-            Player.controls(false)
         })
-
 
         Player.on('pause', () => {
             let time = Player.currentTime()
