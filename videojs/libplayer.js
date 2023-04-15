@@ -83,15 +83,19 @@
                 await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
 
                 
-                Player.muted(false);
-                Player.currentTime(0)
+                setTimeout(()=>{
 
-                canvas.style.zIndex = 2;
+                    Player.muted(false);
+                    Player.currentTime(0)
+    
 
-                if (loader) {
-                    loader.style.display = "none"
-                }
+                    canvas.style.zIndex = 2;
 
+                    if (loader) {
+                        loader.style.display = "none"
+                    }
+    
+                },200)
             }
 
         }
