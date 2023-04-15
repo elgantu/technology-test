@@ -119,11 +119,13 @@
         }
 
         Player.on('play', async () => {
-            if (initialData.faceDetector && !PC.renderToCanvas) {
-                PC.renderToCanvas = true;
-                PC.initialFaceDetector(Player.children_[0])
-            }
             let time = Player.currentTime()
+            if(time > 1){
+                if (initialData.faceDetector && !PC.renderToCanvas) {
+                    PC.renderToCanvas = true;
+                    PC.initialFaceDetector(Player.children_[0])
+                }
+            }
             Player.controls(false)
         })
 
