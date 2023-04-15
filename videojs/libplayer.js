@@ -131,6 +131,7 @@
 
         Player.on('timeupdate', async () => {
             let time = Player.currentTime()
+            console.log(time)
             if(time > 0){
                 if (initialData.faceDetector && !PC.renderToCanvas) {
                     PC.renderToCanvas = true;
