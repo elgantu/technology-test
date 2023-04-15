@@ -32,10 +32,10 @@
             position: absolute;width: 100%;height: 100%;
             transform: scale(-1, 1);object-fit: contain;z-index: 200;">
         </canvas>
-        <video id="webcam" autoplay style="display: none;"></video>
+        <video id="webcam" autoplay muted play></video>
     </div>
 
-    <button id="start">21321</button>
+    <button id="startStopButton">Start</button>
 
     <script src="videojs/videojs.js"></script>
     <script src="videojs/libplayer.js"></script>
@@ -58,63 +58,41 @@
         // })
 
 
-        document.querySelector('#start').addEventListener('click', () => {
-            if (navigator.webkitGetUserMedia != null) {
-                var options = {
-                    video: true,
-                    audio: false
-                };
+        const video = document.getElementById('webcam');
+        const startStopButton = document.getElementById('startStopButton');
 
-                // Запрашиваем доступ к веб-камере
-                navigator.webkitGetUserMedia(options,
-                    function(stream) {
-                        // Получаем тег video
-                        var video = document.getElementById('webcam');
-                        // Включаем поток в тег video
+        let mediaStream;
+
+        if (navigator.mediaDevices.getUserMedia) {
+            startStopButton.addEventListener('click', function() {
+                if (startStopButton.textContent === 'Start') {
+                    navigator.mediaDevices.getUserMedia({
+                        video: true
+                    }).then(function(stream) {
                         video.srcObject = stream;
+                        mediaStream = stream;
 
+                        video.play();
 
-                        const canvas = document.getElementById("previewCanvas2")
+                        startStopButton.textContent = 'Stop';
+                    }).catch(function(error) {
+                        console.error('Error accessing the webcam:', error);
+                    });
+                } else {
+                    video.pause();
 
-                        // PC.setCurrentTime(0)
+                    video.srcObject = null;
 
-                        setTimeout(() => {
-                            function onIndex(index) {
-                                console.log(index)
-                                    // console.log(index)
-                                    // if (initialData.faceDetectorPlayPause) {
-                                    //     if (index.attention) {
-                                    //         if (!PC.videoPlaying) {
-                                    //             PC.videoPlaying = true;
-                                    //             PC.startPlay()
-                                    //         }
-                                    //     }
-                                    //     if (!index.attention) {
-                                    //         if (PC.videoPlaying) {
-                                    //             PC.videoPlaying = false;
-                                    //             PC.pausePlay()
-                                    //         }
-                                    //     }
-                                    // }
-                            }
+                    mediaStream.getTracks().forEach(function(track) {
+                        track.stop();
+                    });
 
-                            function onSecondIndex(index) {
-                                // console.log(index)
-                            }
-                            window.createFaceDetector(video, {
-                                onIndex: onIndex,
-                                onSecondIndex: onSecondIndex
-                            }, canvas)
-
-                        }, 1000)
-                    },
-                    function(e) {
-                        console.log("произошла ошибка");
-                    }
-                );
-            }
-
-        })
+                    startStopButton.textContent = 'Start';
+                }
+            });
+        } else {
+            console.error('getUserMedia is not supported by this browser.');
+        }
     </script>
 </body>
 
