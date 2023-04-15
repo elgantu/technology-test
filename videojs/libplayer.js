@@ -56,6 +56,7 @@
 
                 Player.muted(true);
                 function onIndex(index) {
+                    console.log(index)
                     if (initialData.faceDetectorPlayPause) {
                         if (index.attention) {
                             if (!PC.videoPlaying) {
@@ -73,15 +74,17 @@
                 }
 
                 function onSecondIndex(index) {
-                    console.log(index)
+                    // console.log(index)
                 }
 
                 const canvas = document.getElementById(initialData.canvasElementId)
                 canvas.style.zIndex = 2;
                 
                 PC.setCurrentTime(0)
-
-                await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
+                setTimeout(()=>{
+                    window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
+                },1000)
+                window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
                 if(loader){
                     loader.style.display = "none"
                 }
