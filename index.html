@@ -23,95 +23,25 @@
         </video>
     </div>
 
-
-    <div style="width: 100%;height: 100%;">
-        <div class="loader-container" id="loaderPreview">
-            <div class="loader"></div>
-        </div>
-        <!-- <canvas id="previewCanvas2" style="
-            position: absolute;width: 100%;height: 100%;
-            transform: scale(-1, 1);object-fit: contain;z-index: 200;">
-        </canvas> -->
-        <video id="webcam" autoplay muted crossOrigin='anonymous'></video>
-    </div>
-    <div id="active"></div>
-
-    <button id="startStopButton">Start</button>
-
     <script src="videojs/videojs.js"></script>
     <script src="videojs/libplayer.js"></script>
     <script src="videojs/bundle.js"></script>
     <script>
-        // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        //     console.log('yes')
-        // } else {
-        //     console.log('no')
-        // }
-        // WSSP({
-        //     video_url: 'https://elgantu.github.io/bundle/video2.mp4',
-        //     playerElement: 'player__preview',
-        //     faceDetector: true,
-        //     canvasElementId: 'previewCanvas',
-        //     // autoplay: true,
-        //     // muted: true,
-        //     faceDetectorPlayPause: false,
-        //     loader: "loaderPreview"
-        // })
-
-
-        const video = document.getElementById('webcam');
-        const startStopButton = document.getElementById('startStopButton');
-
-        let mediaStream;
-
-        if (navigator.mediaDevices.getUserMedia) {
-            startStopButton.addEventListener('click', function() {
-                if (startStopButton.textContent === 'Start') {
-                    navigator.mediaDevices.getUserMedia({
-                        video: true
-                    }).then(function(stream) {
-                        video.srcObject = stream;
-                        mediaStream = stream;
-
-                        video.play();
-
-
-                        setTimeout(() => {
-                            function onIndex(index) {
-                                document.getElementById("active").innerHTML = Number(index.attention)
-                            }
-
-                            function onSecondIndex(index) {
-                                // console.log(index)
-                            }
-
-                            // const canvas = document.getElementById("privewCanvas2")
-
-                            window.createFaceDetector(video, {
-                                onIndex: onIndex,
-                                onSecondIndex: onSecondIndex
-                            })
-                        }, 500)
-
-                        startStopButton.textContent = 'Stop';
-                    }).catch(function(error) {
-                        console.error('Error accessing the webcam:', error);
-                    });
-                } else {
-                    video.pause();
-
-                    video.srcObject = null;
-
-                    mediaStream.getTracks().forEach(function(track) {
-                        track.stop();
-                    });
-
-                    startStopButton.textContent = 'Start';
-                }
-            });
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            console.log('yes')
         } else {
-            console.error('getUserMedia is not supported by this browser.');
+            console.log('no')
         }
+        WSSP({
+            video_url: 'https://elgantu.github.io/bundle/video2.mp4',
+            playerElement: 'player__preview',
+            faceDetector: true,
+            canvasElementId: 'previewCanvas',
+            // autoplay: true,
+            // muted: true,
+            faceDetectorPlayPause: false,
+            loader: "loaderPreview"
+        })
     </script>
 </body>
 
