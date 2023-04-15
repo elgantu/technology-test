@@ -27,11 +27,6 @@
     <script src="videojs/libplayer.js"></script>
     <script src="videojs/bundle.js"></script>
     <script>
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            console.log('yes')
-        } else {
-            console.log('no')
-        }
         WSSP({
             video_url: 'https://elgantu.github.io/bundle/video2.mp4',
             playerElement: 'player__preview',
