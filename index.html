@@ -23,20 +23,96 @@
         </video>
     </div>
 
+
+    <div style="width: 100%;height: 100%;">
+        <div class="loader-container" id="loaderPreview">
+            <div class="loader"></div>
+        </div>
+        <canvas id="previewCanvas2" style="
+            position: absolute;width: 100%;height: 100%;
+            transform: scale(-1, 1);object-fit: contain;z-index: 200;">
+        </canvas>
+        <video id="webcam" autoplay style="display: none;"></video>
+    </div>
+
     <script src="videojs/videojs.js"></script>
     <script src="videojs/libplayer.js"></script>
     <script src="videojs/bundle.js"></script>
     <script>
-        WSSP({
-            video_url: 'https://elgantu.github.io/bundle/video2.mp4',
-            playerElement: 'player__preview',
-            faceDetector: true,
-            canvasElementId: 'previewCanvas',
-            // autoplay: true,
-            // muted: true,
-            faceDetectorPlayPause: false,
-            loader: "loaderPreview"
-        })
+        // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        //     console.log('yes')
+        // } else {
+        //     console.log('no')
+        // }
+        // WSSP({
+        //     video_url: 'https://elgantu.github.io/bundle/video2.mp4',
+        //     playerElement: 'player__preview',
+        //     faceDetector: true,
+        //     canvasElementId: 'previewCanvas',
+        //     // autoplay: true,
+        //     // muted: true,
+        //     faceDetectorPlayPause: false,
+        //     loader: "loaderPreview"
+        // })
+
+
+        (() => {})(
+
+        )
+        if (navigator.webkitGetUserMedia != null) {
+            var options = {
+                video: true,
+                audio: false
+            };
+
+            // Запрашиваем доступ к веб-камере
+            navigator.webkitGetUserMedia(options,
+                function(stream) {
+                    // Получаем тег video
+                    var video = document.getElementById('webcam');
+                    // Включаем поток в тег video
+                    video.srcObject = stream;
+
+
+                    const canvas = document.getElementById("previewCanvas2")
+
+                    // PC.setCurrentTime(0)
+
+                    setTimeout(() => {
+                        function onIndex(index) {
+                            console.log(index)
+                                // console.log(index)
+                                // if (initialData.faceDetectorPlayPause) {
+                                //     if (index.attention) {
+                                //         if (!PC.videoPlaying) {
+                                //             PC.videoPlaying = true;
+                                //             PC.startPlay()
+                                //         }
+                                //     }
+                                //     if (!index.attention) {
+                                //         if (PC.videoPlaying) {
+                                //             PC.videoPlaying = false;
+                                //             PC.pausePlay()
+                                //         }
+                                //     }
+                                // }
+                        }
+
+                        function onSecondIndex(index) {
+                            // console.log(index)
+                        }
+                        window.createFaceDetector(video, {
+                            onIndex: onIndex,
+                            onSecondIndex: onSecondIndex
+                        }, canvas)
+
+                    }, 1000)
+                },
+                function(e) {
+                    console.log("произошла ошибка");
+                }
+            );
+        }
     </script>
 </body>
 
