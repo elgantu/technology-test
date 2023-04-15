@@ -78,19 +78,20 @@
                 }
 
                 const canvas = document.getElementById(initialData.canvasElementId)
-                canvas.style.zIndex = 2;
 
-                PC.setCurrentTime(0)
+                Player.currentTime(0)
                 await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
 
-            
+                
+                Player.muted(false);
+                Player.currentTime(0)
+
+                canvas.style.zIndex = 2;
+
                 if (loader) {
                     loader.style.display = "none"
                 }
 
-
-                Player.muted(false);
-                PC.setCurrentTime(1)
             }
 
         }
