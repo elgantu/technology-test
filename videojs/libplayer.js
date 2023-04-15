@@ -80,10 +80,10 @@
                 const canvas = document.getElementById(initialData.canvasElementId)
                 canvas.style.zIndex = 2;
 
-                PC.setCurrentTime(0)
-                setTimeout(() => {
+                // PC.setCurrentTime(0)
+                // setTimeout(() => {
                     window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
-                }, 1000)
+                // }, 1000)
 
             
                 if (loader) {
@@ -92,7 +92,7 @@
 
 
                 Player.muted(false);
-                PC.setCurrentTime(1)
+                // PC.setCurrentTime(1)
             }
 
         }
