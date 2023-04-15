@@ -35,6 +35,8 @@
         <video id="webcam" autoplay style="display: none;"></video>
     </div>
 
+    <button id="start">21321</button>
+
     <script src="videojs/videojs.js"></script>
     <script src="videojs/libplayer.js"></script>
     <script src="videojs/bundle.js"></script>
@@ -56,63 +58,63 @@
         // })
 
 
-        (() => {})(
+        document.querySelector('#start').addEventListener('click', () => {
+            if (navigator.webkitGetUserMedia != null) {
+                var options = {
+                    video: true,
+                    audio: false
+                };
 
-        )
-        if (navigator.webkitGetUserMedia != null) {
-            var options = {
-                video: true,
-                audio: false
-            };
-
-            // Запрашиваем доступ к веб-камере
-            navigator.webkitGetUserMedia(options,
-                function(stream) {
-                    // Получаем тег video
-                    var video = document.getElementById('webcam');
-                    // Включаем поток в тег video
-                    video.srcObject = stream;
+                // Запрашиваем доступ к веб-камере
+                navigator.webkitGetUserMedia(options,
+                    function(stream) {
+                        // Получаем тег video
+                        var video = document.getElementById('webcam');
+                        // Включаем поток в тег video
+                        video.srcObject = stream;
 
 
-                    const canvas = document.getElementById("previewCanvas2")
+                        const canvas = document.getElementById("previewCanvas2")
 
-                    // PC.setCurrentTime(0)
+                        // PC.setCurrentTime(0)
 
-                    setTimeout(() => {
-                        function onIndex(index) {
-                            console.log(index)
+                        setTimeout(() => {
+                            function onIndex(index) {
+                                console.log(index)
+                                    // console.log(index)
+                                    // if (initialData.faceDetectorPlayPause) {
+                                    //     if (index.attention) {
+                                    //         if (!PC.videoPlaying) {
+                                    //             PC.videoPlaying = true;
+                                    //             PC.startPlay()
+                                    //         }
+                                    //     }
+                                    //     if (!index.attention) {
+                                    //         if (PC.videoPlaying) {
+                                    //             PC.videoPlaying = false;
+                                    //             PC.pausePlay()
+                                    //         }
+                                    //     }
+                                    // }
+                            }
+
+                            function onSecondIndex(index) {
                                 // console.log(index)
-                                // if (initialData.faceDetectorPlayPause) {
-                                //     if (index.attention) {
-                                //         if (!PC.videoPlaying) {
-                                //             PC.videoPlaying = true;
-                                //             PC.startPlay()
-                                //         }
-                                //     }
-                                //     if (!index.attention) {
-                                //         if (PC.videoPlaying) {
-                                //             PC.videoPlaying = false;
-                                //             PC.pausePlay()
-                                //         }
-                                //     }
-                                // }
-                        }
+                            }
+                            window.createFaceDetector(video, {
+                                onIndex: onIndex,
+                                onSecondIndex: onSecondIndex
+                            }, canvas)
 
-                        function onSecondIndex(index) {
-                            // console.log(index)
-                        }
-                        window.createFaceDetector(video, {
-                            onIndex: onIndex,
-                            onSecondIndex: onSecondIndex
-                        }, canvas)
+                        }, 1000)
+                    },
+                    function(e) {
+                        console.log("произошла ошибка");
+                    }
+                );
+            }
 
-                    }, 1000)
-                },
-                function(e) {
-                    console.log("произошла ошибка");
-                }
-            );
-        }
+        })
     </script>
 </body>
 
