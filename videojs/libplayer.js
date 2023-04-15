@@ -74,16 +74,14 @@
                 }
 
                 function onSecondIndex(index) {
-                    // console.log(index)
+                    console.log(index)
                 }
 
                 const canvas = document.getElementById(initialData.canvasElementId)
                 canvas.style.zIndex = 2;
 
-                // PC.setCurrentTime(0)
-                // setTimeout(() => {
-                    window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
-                // }, 1000)
+                PC.setCurrentTime(0)
+                await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
 
             
                 if (loader) {
@@ -92,7 +90,7 @@
 
 
                 Player.muted(false);
-                // PC.setCurrentTime(1)
+                PC.setCurrentTime(1)
             }
 
         }
