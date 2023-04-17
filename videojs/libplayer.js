@@ -99,7 +99,6 @@
 
 
             async initialFaceDetectorWebcam(player) {
-                await player.play()
                 if (!this.loader) {
                     this.loader = true;
                     let loader = false;
