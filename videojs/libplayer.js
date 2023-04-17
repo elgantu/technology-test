@@ -139,9 +139,7 @@
                 const canvas = document.getElementById(initialData.canvasWebcamElementId)
                 canvas.style.zIndex = 2;
                 Player.currentTime(0)
-                setTimeout(()=>{
                     window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
-                },1000)
 
 
                 setTimeout(() => {
@@ -183,7 +181,7 @@
                     navigator.mediaDevices.getUserMedia({ video: true }).then(async function (stream) {
                         video.srcObject = stream;
                         mediaStream = stream;
-                        // await video.play();
+                        await video.play();
                         return true
                     }).catch(function (error) {
                         console.error('Error accessing the webcam:', error);
