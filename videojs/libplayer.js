@@ -8,7 +8,8 @@
 
         const Player = videojs(initialData.playerElement, {
             autoplay: initialData.autoplay || false,
-            playsinline: true
+            playsinline: true,
+            responsive: true
         });
 
         class OperationWithPlayer {
@@ -17,6 +18,8 @@
                 this.videoPlaying = false;
                 this.videoPlayingFromButton = false;
                 this.loader = true;
+                this.faceDetectorActive = false;
+                this.videoStop = false;
             }
 
             async pausePlay() {
@@ -58,25 +61,26 @@
 
                 Player.muted(true);
                 function onIndex(index) {
-                    console.log(index)
                     if (initialData.faceDetectorPlayPause) {
-                        if (index.attention) {
-                            if (!PC.videoPlaying) {
-                                PC.videoPlaying = true;
-                                PC.startPlay()
+                        if (!PC.videoStop) {
+                            if (index.attention) {
+                                if (!PC.videoPlaying && PC.faceDetectorActive) {
+                                    PC.videoPlaying = true;
+                                    PC.startPlay()
+                                }
                             }
-                        }
-                        if (!index.attention) {
-                            if (PC.videoPlaying) {
-                                PC.videoPlaying = false;
-                                PC.pausePlay()
+                        }else {
+                            if (!index.attention) {
+                                if (PC.videoPlaying && PC.faceDetectorActive) {
+                                    PC.videoPlaying = false;
+                                    PC.pausePlay()
+                                }
                             }
                         }
                     }
                 }
 
                 function onSecondIndex(index) {
-                    console.log(index)
                 }
 
                 const canvas = document.getElementById(initialData.canvasElementId)
@@ -95,6 +99,7 @@
                     }
 
                 }, 100)
+                PC.faceDetectorActive = true
             }
 
 
@@ -116,15 +121,15 @@
 
                 Player.muted(true);
                 function onIndex(index) {
-                    if(index){
-                        
-                        if(typeof index.attention != undefined){
+                    if (index) {
 
-                            if(initialData.indexAttentionElement){
+                        if (typeof index.attention != undefined) {
+
+                            if (initialData.indexAttentionElement) {
 
                                 const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
 
-                                if(elementIndexAttention){
+                                if (elementIndexAttention) {
 
                                     elementIndexAttention.innerHTML = Number(index.attention) * 100
 
@@ -134,13 +139,13 @@
 
                         }
 
-                        if(typeof index.activeFaces != undefined){
+                        if (typeof index.activeFaces != undefined) {
 
-                            if(initialData.activeFacesElement){
+                            if (initialData.activeFacesElement) {
 
                                 const activeFaces = document.getElementById(initialData.activeFacesElement)
 
-                                if(activeFaces){
+                                if (activeFaces) {
 
                                     activeFaces.innerHTML = Number(index.activeFaces)
 
@@ -151,13 +156,13 @@
                         }
 
 
-                        if(typeof index.faces != undefined){
+                        if (typeof index.faces != undefined) {
 
-                            if(initialData.facesElement){
+                            if (initialData.facesElement) {
 
                                 const faces = document.getElementById(initialData.facesElement)
 
-                                if(faces){
+                                if (faces) {
 
                                     faces.innerHTML = Number(index.faces)
 
@@ -168,26 +173,29 @@
                         }
 
 
-                        }
+                    }
 
                     if (initialData.faceDetectorPlayPauseWebcam) {
-                        if (index.attention) {
-                            if (!PC.videoPlaying) {
-                                PC.videoPlaying = true;
-                                PC.startPlay()
+                        if (!PC.videoStop) {
+                            if (index.attention) {
+                                if (!PC.videoPlaying && PC.faceDetectorActive) {
+                                    PC.startPlay()
+                                    PC.videoPlaying = true;
+                                }
                             }
-                        }
-                        if (!index.attention) {
-                            if (PC.videoPlaying) {
-                                PC.videoPlaying = false;
-                                PC.pausePlay()
+                            if (!index.attention) {
+                                if (PC.videoPlaying && PC.faceDetectorActive) {
+                                    PC.pausePlay()
+                                    PC.videoPlaying = false;
+                                }
                             }
                         }
                     }
+
+                    PC.faceDetectorActive = true
                 }
 
                 function onSecondIndex(index) {
-                    console.log(index)
                 }
 
                 const canvas = document.getElementById(initialData.canvasWebcamElementId)
@@ -237,7 +245,7 @@
                     await video.play()
                 }
 
-                return mediaStream;
+                return true;
             }
 
         }
@@ -265,26 +273,22 @@
         }
 
         Player.on('play', async () => {
-
-            // if (initialData.faceDetector && !PC.renderToCanvas) {
-            //     PC.renderToCanvas = true;
-            //     PC.initialFaceDetector(document.getElementById('player__preview'))
-            // }
-
-            if (initialData.faceDetectorWebcam && !PC.videoPlayingFromButton) {
-                PC.videoPlayingFromButton = true
-                const stream = await PC.streamFromWebcam()
-                await PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
-            }    
-
-            let time = Player.currentTime()
-            Player.controls(false)
+            if (initialData.faceDetectorWebcam && !PC.videoPlayingFromButton && !PC.faceDetectorActive && !PC.videoPlaying) {
+                const streamStarted = await PC.streamFromWebcam()
+                if (streamStarted) {
+                    await PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
+                }
+            }
+            PC.videoStop = false
+            PC.videoPlayingFromButton = true
         })
 
 
-        Player.on('pause', () => {
-            // PC.videoPlaying = false
-            let time = Player.currentTime()
+        Player.on('pause', async () => {
+            if (initialData.faceDetectorWebcam && PC.videoPlayingFromButton && PC.faceDetectorActive && PC.videoPlaying) {
+                PC.videoPlayingFromButton = false
+                PC.videoStop = true
+            }
         })
 
 
