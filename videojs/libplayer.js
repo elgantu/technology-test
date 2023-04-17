@@ -225,7 +225,7 @@
             if (initialData.faceDetectorWebcam && !PC.videoPlayingFromButton) {
                 PC.videoPlayingFromButton = true
                 await PC.streamFromWebcam()
-                await PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
+                PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
             }
 
             let time = Player.currentTime()
