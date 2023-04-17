@@ -15,6 +15,8 @@
             constructor() {
                 this.renderToCanvas = false;
                 this.videoPlaying = false;
+                this.videoPlayingFromButton = false;
+                this.loader = true;
             }
 
             async pausePlay() {
@@ -82,8 +84,8 @@
                 Player.currentTime(0)
                 await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
 
-                
-                setTimeout(()=>{
+
+                setTimeout(() => {
 
                     Player.muted(false);
                     Player.currentTime(0)
@@ -91,18 +93,109 @@
                     if (loader) {
                         loader.style.display = "none"
                     }
-    
-                },200)
+
+                }, 100)
+            }
+
+
+            async initialFaceDetectorWebcam(player) {
+                await player.play()
+                if (!this.loader) {
+                    this.loader = true;
+                    let loader = false;
+                    let loaderWebcam = false;
+
+                    if (initialData.loader) {
+                        loader = document.getElementById(initialData.loader)
+                        loader.style.display = "flex"
+                    }
+                    if (initialData.loaderWebcam) {
+                        loaderWebcam = document.getElementById(initialData.loaderWebcam)
+                        loaderWebcam.style.display = "flex"
+                    }
+                }
+
+                Player.muted(true);
+                function onIndex(index) {
+                    if (initialData.faceDetectorPlayPauseWebcam) {
+                        if (index.attention) {
+                            if (!PC.videoPlaying) {
+                                PC.videoPlaying = true;
+                                PC.startPlay()
+                            }
+                        }
+                        if (!index.attention) {
+                            if (PC.videoPlaying) {
+                                PC.videoPlaying = false;
+                                PC.pausePlay()
+                            }
+                        }
+                    }
+                }
+
+                function onSecondIndex(index) {
+                    console.log(index)
+                }
+
+                const canvas = document.getElementById(initialData.canvasWebcamElementId)
+                canvas.style.zIndex = 2;
+                Player.currentTime(0)
+                await window.createFaceDetector(player, { onIndex: onIndex, onSecondIndex: onSecondIndex }, canvas)
+
+
+                setTimeout(() => {
+
+                    Player.muted(false);
+                    Player.currentTime(0)
+
+                    if (PC.loader) {
+                        const loader = document.getElementById(initialData.loader)
+                        const loaderWebcam = document.getElementById(initialData.loaderWebcam)
+                        loader.style.display = "none"
+                        loaderWebcam.style.display = "none"
+                    }
+
+                }, 100)
+            }
+
+
+            async streamFromWebcam() {
+                this.loader = true;
+                let loader = false;
+                let loaderWebcam = false;
+
+                if (initialData.loader) {
+                    loader = document.getElementById(initialData.loader)
+                    loader.style.display = "flex"
+                }
+                if (initialData.loaderWebcam) {
+                    loaderWebcam = document.getElementById(initialData.loaderWebcam)
+                    loaderWebcam.style.display = "flex"
+                }
+
+                let mediaStream;
+                const video = document.getElementById(initialData.webcamVideoElementId)
+
+
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(async function (stream) {
+                        video.srcObject = stream;
+                        mediaStream = stream;
+                        // await video.play();
+                        return true
+                    }).catch(function (error) {
+                        console.error('Error accessing the webcam:', error);
+                    });
+                }
             }
 
         }
+
 
         const PC = new OperationWithPlayer();
 
 
         const init = async () => {
-
-
             PC.setUrlVideo(initialData.video_url)
         }
 
@@ -121,16 +214,26 @@
         }
 
         Player.on('play', async () => {
-            if (initialData.faceDetector && !PC.renderToCanvas) {
-                PC.renderToCanvas = true;
-                PC.initialFaceDetector(document.getElementById('player__preview_html5_api'))
+
+            // if (initialData.faceDetector && !PC.renderToCanvas) {
+            //     PC.renderToCanvas = true;
+            //     PC.initialFaceDetector(document.getElementById('player__preview'))
+            // }
+
+
+            if (initialData.faceDetectorWebcam && !PC.videoPlayingFromButton) {
+                PC.videoPlayingFromButton = true
+                await PC.streamFromWebcam()
+                await PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
             }
+
             let time = Player.currentTime()
             Player.controls(false)
         })
 
 
         Player.on('pause', () => {
+            // PC.videoPlaying = false
             let time = Player.currentTime()
         })
 
