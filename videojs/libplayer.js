@@ -116,6 +116,60 @@
 
                 Player.muted(true);
                 function onIndex(index) {
+                    if(index){
+                        
+                        if(typeof index.attention != undefined){
+
+                            if(initialData.indexAttentionElement){
+
+                                const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
+
+                                if(elementIndexAttention){
+
+                                    elementIndexAttention.innerHTML = Number(index.attention) * 100
+
+                                }
+
+                            }
+
+                        }
+
+                        if(typeof index.activeFaces != undefined){
+
+                            if(initialData.activeFacesElement){
+
+                                const activeFaces = document.getElementById(initialData.activeFacesElement)
+
+                                if(activeFaces){
+
+                                    activeFaces.innerHTML = Number(index.activeFaces)
+
+                                }
+
+                            }
+
+                        }
+
+
+                        if(typeof index.faces != undefined){
+
+                            if(initialData.facesElement){
+
+                                const faces = document.getElementById(initialData.facesElement)
+
+                                if(faces){
+
+                                    faces.innerHTML = Number(index.faces)
+
+                                }
+
+                            }
+
+                        }
+
+
+                        }
+
                     if (initialData.faceDetectorPlayPauseWebcam) {
                         if (index.attention) {
                             if (!PC.videoPlaying) {
@@ -220,7 +274,6 @@
             if (initialData.faceDetectorWebcam && !PC.videoPlayingFromButton) {
                 PC.videoPlayingFromButton = true
                 const stream = await PC.streamFromWebcam()
-                console.log(stream)
                 await PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
             }    
 
