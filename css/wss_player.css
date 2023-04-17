@@ -93,3 +93,11 @@ body {
     object-fit: cover;
     border-radius: 10px;
 }
+
+.vjs-control-bar {
+    display: none !important;
+}
+
+.video-js {
+    cursor: pointer;
+}
