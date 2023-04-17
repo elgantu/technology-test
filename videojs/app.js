@@ -9,5 +9,8 @@ WSSP({
     loaderWebcam: "loader-webcam",
     faceDetectorPlayPauseWebcam: true,
     webcamVideoElementId:'webcam-video',
-    controls:false
+    controls:false,
+    facesElement:'faces',
+    activeFacesElement:'active-faces',
+    indexAttentionElement: 'index-attention'
 })
