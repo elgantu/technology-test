@@ -295,6 +295,10 @@
             }
         })
 
+        Player.on('ended', async () => {
+            window.destroyFaceDetector()
+        })
+
 
     }
 
