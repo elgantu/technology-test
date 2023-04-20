@@ -129,11 +129,11 @@
                             if (initialData.indexAttentionElement) {
 
                                 const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
-                                this.indexesAttention.push(index.attention)
+                                PC.indexesAttention.push(index.attention)
 
                                 if (elementIndexAttention) {
                                     if (this.indexesAttention.length > 0) {
-                                        elementIndexAttention.innerHTML = 100 / Number(this.indexesAttention.length) * Number(this.indexesAttention.filter(index => index === true).length)
+                                        elementIndexAttention.innerHTML = 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index === true).length)
                                     }
                                 }
 
