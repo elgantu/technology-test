@@ -312,10 +312,10 @@
             const observer = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(entry => {
                     if(entry.isIntersecting){
-                        PC.play()
+                        Player.play()
                     }
                     if(!entry.isIntersecting){
-                        PC.false()
+                        Player.pause()
                     }
                 });
             }, options);
