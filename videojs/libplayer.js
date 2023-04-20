@@ -302,6 +302,27 @@
             PC.videoPlaying = false
         })
 
+        document.addEventListener("DOMContentLoaded", function() {
+            const sectionOne = document.querySelector('.preview__video');
+            const options = {
+                rootMargin: "40px",
+                threshold: 1.0,
+            };
+
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        PC.play()
+                    }
+                    if(!entry.isIntersecting){
+                        PC.false()
+                    }
+                });
+            }, options);
+
+            observer.observe(sectionOne);
+        })
+
 
     }
 
