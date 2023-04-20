@@ -131,12 +131,10 @@
                                 const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
                                 PC.indexesAttention.push(index.attention)
 
-                                console.log(PC.indexesAttention)
 
                                 if (elementIndexAttention) {
                                     if (PC.indexesAttention.length > 0) {
-                                        console.log( 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index === true).length))
-                                        elementIndexAttention.innerHTML = 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length)
+                                        elementIndexAttention.innerHTML = Math.ceil(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
                                     }
                                 }
 
