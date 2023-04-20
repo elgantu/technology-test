@@ -68,15 +68,19 @@
                         if (!PC.videoStop) {
                             if (index.attention) {
                                 if (!PC.videoPlaying && PC.faceDetectorActive) {
+                                    if(PC.seconds > PC.currentSecond){
                                     PC.videoPlaying = true;
                                     PC.startPlay()
+                                    }
                                 }
                             }
                         } else {
                             if (!index.attention) {
                                 if (PC.videoPlaying && PC.faceDetectorActive) {
+                                    if(PC.seconds > PC.currentSecond){
                                     PC.videoPlaying = false;
                                     PC.pausePlay()
+                                    }
                                 }
                             }
                         }
@@ -132,13 +136,14 @@
                             if (initialData.indexAttentionElement) {
 
                                 const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
+                                PC.indexesAttention.push(index.attention)
 
 
                                 if (elementIndexAttention) {
                                     if (PC.indexesAttention.length > 0) {
                                         if(PC.seconds > PC.currentSecond){
-                                            PC.indexesAttention.push(index.attention)
-                                            elementIndexAttention.innerHTML = Math.floor(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
+                                        PC.currentSecond = PC.seconds
+                                        elementIndexAttention.innerHTML = Math.floor(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
                                         }
                                     }
                                 }
