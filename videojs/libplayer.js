@@ -302,26 +302,26 @@
             PC.videoPlaying = false
         })
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const sectionOne = document.querySelector('.preview__video');
-            const options = {
-                rootMargin: "40px",
-                threshold: 1.0,
-            };
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const sectionOne = document.querySelector('.preview__video');
+        //     const options = {
+        //         rootMargin: "40px",
+        //         threshold: 1.0,
+        //     };
 
-            const observer = new IntersectionObserver(function(entries, observer) {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting){
-                        Player.play()
-                    }
-                    if(!entry.isIntersecting){
-                        Player.pause()
-                    }
-                });
-            }, options);
+        //     const observer = new IntersectionObserver(function(entries, observer) {
+        //         entries.forEach(entry => {
+        //             if(entry.isIntersecting){
+        //                 Player.play()
+        //             }
+        //             if(!entry.isIntersecting){
+        //                 Player.pause()
+        //             }
+        //         });
+        //     }, options);
 
-            observer.observe(sectionOne);
-        })
+        //     observer.observe(sectionOne);
+        // })
 
 
     }
