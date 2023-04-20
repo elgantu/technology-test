@@ -277,6 +277,7 @@
 
         Player.on('play', async () => {
             if (initialData.faceDetectorWebcam && !PC.videoPlayingFromButton && !PC.faceDetectorActive && !PC.videoPlaying) {
+                PC.indexesAttention = [];
                 const streamStarted = await PC.streamFromWebcam()
                 if (streamStarted) {
                     await PC.initialFaceDetectorWebcam(document.getElementById(initialData.webcamVideoElementId))
