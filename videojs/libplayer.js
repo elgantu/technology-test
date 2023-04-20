@@ -136,7 +136,7 @@
                                 if (elementIndexAttention) {
                                     if (PC.indexesAttention.length > 0) {
                                         console.log( 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index === true).length))
-                                        elementIndexAttention.innerHTML = 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index === true).length)
+                                        elementIndexAttention.innerHTML = 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length)
                                     }
                                 }
 
