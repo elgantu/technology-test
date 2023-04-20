@@ -132,7 +132,7 @@
                                 PC.indexesAttention.push(index.attention)
 
                                 if (elementIndexAttention) {
-                                    if (this.indexesAttention.length > 0) {
+                                    if (PC.indexesAttention.length > 0) {
                                         elementIndexAttention.innerHTML = 100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index === true).length)
                                     }
                                 }
