@@ -82,6 +82,7 @@
                 }
 
                 function onSecondIndex(index) {
+                    console.log(index)
                 }
 
                 const canvas = document.getElementById(initialData.canvasElementId)
