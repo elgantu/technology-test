@@ -20,6 +20,7 @@
                 this.loader = true;
                 this.faceDetectorActive = false;
                 this.videoStop = false;
+                this.indexesAttention = [];
             }
 
             async pausePlay() {
@@ -69,7 +70,7 @@
                                     PC.startPlay()
                                 }
                             }
-                        }else {
+                        } else {
                             if (!index.attention) {
                                 if (PC.videoPlaying && PC.faceDetectorActive) {
                                     PC.videoPlaying = false;
@@ -128,11 +129,12 @@
                             if (initialData.indexAttentionElement) {
 
                                 const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
+                                this.indexesAttention.push(index.attention)
 
                                 if (elementIndexAttention) {
-
-                                    elementIndexAttention.innerHTML = Number(index.attention) * 100
-
+                                    if (this.indexesAttention.length > 0) {
+                                        elementIndexAttention.innerHTML = 100 / Number(this.indexesAttention.length) * Number(this.indexesAttention.filter(index => index === true).length)
+                                    }
                                 }
 
                             }
