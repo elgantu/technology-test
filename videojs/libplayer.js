@@ -291,6 +291,7 @@
             if (initialData.faceDetectorWebcam && PC.videoPlayingFromButton && PC.faceDetectorActive && PC.videoPlaying) {
                 PC.videoPlayingFromButton = false
                 PC.videoStop = true
+                Player.controls(true)
             }
         })
 
