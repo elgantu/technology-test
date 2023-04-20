@@ -134,7 +134,7 @@
 
                                 if (elementIndexAttention) {
                                     if (PC.indexesAttention.length > 0) {
-                                        elementIndexAttention.innerHTML = Math.ceil(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
+                                        elementIndexAttention.innerHTML = Math.floor(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
                                     }
                                 }
 
