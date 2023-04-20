@@ -21,6 +21,8 @@
                 this.faceDetectorActive = false;
                 this.videoStop = false;
                 this.indexesAttention = [];
+                this.currentSecond = 0;
+                this.seconds = 0;
             }
 
             async pausePlay() {
@@ -130,12 +132,14 @@
                             if (initialData.indexAttentionElement) {
 
                                 const elementIndexAttention = document.getElementById(initialData.indexAttentionElement)
-                                PC.indexesAttention.push(index.attention)
 
 
                                 if (elementIndexAttention) {
                                     if (PC.indexesAttention.length > 0) {
-                                        elementIndexAttention.innerHTML = Math.floor(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
+                                        if(PC.seconds > PC.currentSecond){
+                                            PC.indexesAttention.push(index.attention)
+                                            elementIndexAttention.innerHTML = Math.floor(100 / Number(PC.indexesAttention.length) * Number(PC.indexesAttention.filter(index => index == 1).length))
+                                        }
                                     }
                                 }
 
@@ -323,6 +327,10 @@
 
         //     observer.observe(sectionOne);
         // })
+
+        const interval = setInterval(() => {
+            PC.seconds += 1;
+        }, 1000)
 
 
     }
