@@ -297,6 +297,8 @@
 
         Player.on('ended', async () => {
             window.destroyFaceDetector()
+            PC.videoPlayingFromButton = false
+            PC.videoPlaying = false
         })
 
 
